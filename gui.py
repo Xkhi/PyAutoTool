@@ -7,15 +7,26 @@ import pyautogui as pag
 class App(object):    
     def __init__(self):
         #General configuration
-        self.app = appJar.gui("Python Automation Tool","480x360")
+        self.app = appJar.gui("Python Automation Tool","1280x720")
         #Menu Bar
         self.app.addMenuList("File", ["Save","-","Exit"], self.genericButton)
         self.app.addMenuList("Help",["Help Contents","-","About PyAuTo"],self.genericButton)
         #Buttons
-        self.app.addButton("Save Position",self.genericButton,1,1)
-        self.app.addButton("Save Typing",self.genericButton,2,1)
-        self.app.addLabel("TypeArea","Type Area",0,2)
+        ##Row1
+        self.app.addLabel("Click","Click",0,0)
+        self.app.addLabel("Button","Button",0,1)
+        self.app.addLabel("Text","Text",0,2)
+        ##Row2
+        self.app.addTextArea("clickdef",1,0)
+        self.app.addTextArea("buttondef",1,1)
         self.app.addTextArea("typedef",1,2)
+        ##Row3
+        self.app.addButton("Save Position",self.genericButton,2,0)
+        self.app.addButton("Save Typing",self.genericButton,2,2)
+        ##Row5
+        self.app.addLabel("commlist","Command List",3,0)
+        ##Row4
+        self.app.addTextArea("CommandList",4,0,3)
         #Status bar configuration
         self.app.addStatusbar(fields=3)
         self.app.setStatusbar("Mouse",0)
