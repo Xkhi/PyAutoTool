@@ -1,5 +1,7 @@
 import appJar
 import pyautogui as pag
+import os
+
 
 
 class App(object):    
@@ -20,8 +22,11 @@ class App(object):
         self.app.setPollTime(100)
 
     def getBtn(self,btn):
-        print "Button pressed",btn
-
+        print ("Button pressed",btn)
+        cwd = os.getcwd()
+        filename = self.app.openBox(title=None, dirName=cwd, fileTypes=None, asFile=False, parent=None)
+        print(filename)
+        
     def start(self):
         self.app.go()
 
