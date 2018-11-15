@@ -21,7 +21,10 @@ keys = ['\t', '\n', '\r', ' ', '!', '"', '#', '$', '%', '&', "'", '(',
 'up', 'volumedown', 'volumemute', 'volumeup', 'win', 'winleft', 'winright', 'yen',
 'command', 'option', 'optionleft', 'optionright']
 
-about = "This tool was created by\nJavier Alvarez & Enrique Espinosa\nFor Continental Engineering Services"
+about = "This tool was created by:\n\n\
+Enrique Espinosa - enrique.espinosa@conti-engineering.com\n\n\
+Javier Alvarez - javier.3.alvarez@continental-corporation.com\n\
+For Continental Engineering Services"
 
 fileHeader = "import pyautogui as pag\nfrom time import sleep\n\ndef main():\n"
 fileFooter = "\nif __name__ == '__main__':\n    main()"
