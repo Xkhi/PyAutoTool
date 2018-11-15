@@ -21,36 +21,42 @@ class App(object):
         #Menu Bar
         self.app.addMenuList("File", ["Save","-","Exit"], self.genericButton)
         self.app.addMenuList("Help",["Help Contents","-","About PyAuTo"],self.genericButton)
-        ##Row1
+        ##Row1 - 4
         guiRow = 0
-        self.app.addLabel("Click","Click",guiRow,0)
-        self.app.addLabel("Button","Button",guiRow,1)
-        self.app.addLabel("Text","Text",guiRow,2)
-        ##Row2
-        guiRow = 1
-        self.app.addButton("Capture Click Position",self.getClickPositionButton,guiRow,0)
-        self.app.addOptionBox("Type Kind", ["Plain Text", "Key Combo","Single Press"], guiRow, 2)
-        ##Row3
-        guiRow = 2
-        self.app.addLabel("Click Position","",guiRow,0)
-        self.app.addLabelFileEntry("Select image", guiRow, 1)
-        self.app.addTextArea("TypeArea",guiRow,2)
-        ##Row4
-        guiRow = 3
-        self.app.addButton("Save Click Position",self.getClickPositionButton,guiRow,0)
-        self.app.addButton("Save Button",self.getImageButton,guiRow,1)
-        self.app.addButton("Save Typing",self.parseTextCommands,guiRow,2)
+        self.app.startLabelFrame("Keyboard Input", guiRow, 0,1,3,'ew')
+        self.app.setPadding(20, 10)
+        self.app.addOptionBox("Type Kind", ["Plain Text", "Key Combo","Single Press"])
+        self.app.addEntry("TypeArea")
+        self.app.addButton("Save Typing",self.parseTextCommands)
+        self.app.stopLabelFrame()
+
+        self.app.startLabelFrame("Image Search",guiRow,1,1,3,'ew')
+        self.app.setPadding(20, 10)
+        self.app.addLabelFileEntry("Select image")
+        self.app.addButton("Save Button",self.genericButton)
+        self.app.stopLabelFrame()
+
+        self.app.startLabelFrame("Mouse Clicks", guiRow, 2,1,3,'ew')
+        self.app.setPadding(20, 10)
+        self.app.addButton("Capture Click Position",self.getClickPositionButton)
+        self.app.addLabel("Click Position","")
+        self.app.addButton("Save Click Position",self.getClickPositionButton)
+        self.app.stopLabelFrame()
+
         ##Row5
         guiRow = 4
+        self.app.startLabelFrame("Saved Command List", guiRow, 0, 3, 3,'ew')
+        self.app.setPadding(20, 10)
         self.app.addLabelEntry("Delay(s)",guiRow , 0)
         self.app.addButton("Clear Last Command",self.clearLastCommandButton,guiRow,2)
         ##Row6
         guiRow = 5
-        self.app.addScrolledTextArea("CommandList",guiRow,0,3)
+        self.app.addScrolledTextArea("CommandList",guiRow,0,5)
         ##Row7
         guiRow = 6
-        self.app.addLabelEntry("AutoScript File Name",guiRow , 0)
+        self.app.addLabelEntry("AutoScript File Name",guiRow,0,2)
         self.app.addButton("Save AutoScript File",self.genericButton,guiRow,2)
+        self.app.stopLabelFrame()
         #Status bar configuration
         self.app.addStatusbar(fields=3)
         self.app.setStatusbar("Mouse",0)
@@ -83,9 +89,8 @@ class App(object):
 
     def parseTextCommands(self,btn):
         opt = self.app.getOptionBox("Type Kind")
-        
+        txt = self.app.getEntry("TypeArea").lower()
         pause = self.app.getEntry("Delay(s)")
-        
         #Plain text handler
         if(opt == "Plain Text"):
             txt = self.app.getTextArea("TypeArea")
@@ -110,7 +115,7 @@ class App(object):
         else:
             print("Invalid Option")
         #Post-parse actions
-        self.app.clearTextArea("TypeArea")
+        self.app.clearEntry("TypeArea")
         self.writeCommands()
 
     def getClickPositionButton(self,btn):
@@ -177,7 +182,6 @@ class App(object):
             commandText = commandText + command + "\n"
 
         self.app.setTextArea("CommandList", commandText)
-        #print(self.pythonCommands)
 
 
 def main():
