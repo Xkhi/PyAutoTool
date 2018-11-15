@@ -33,7 +33,7 @@ class App(object):
         self.app.startLabelFrame("Image Search",guiRow,1,1,3,'ew')
         self.app.setPadding(20, 10)
         self.app.addLabelFileEntry("Select image")
-        self.app.addButton("Save Button",self.genericButton)
+        self.app.addButton("Save Button",self.getImageButton)
         self.app.stopLabelFrame()
 
         self.app.startLabelFrame("Mouse Clicks", guiRow, 2,1,3,'ew')
@@ -81,7 +81,7 @@ class App(object):
             else:
                 self.app.infoBox("Error: File Name Missing", "Type a name for the script before saving", parent=None)
         else:
-            
+
             self.commandList.append("Button pressed {}, not yet implemented".format(btn))
 
             self.app.setEntry("Delay(s)", "0.01")
@@ -93,24 +93,24 @@ class App(object):
         pause = self.app.getEntry("Delay(s)")
         #Plain text handler
         if(opt == "Plain Text"):
-            txt = self.app.getTextArea("TypeArea")
+            txt = self.app.getEntry("TypeArea")
             self.commandList.append("Plain write '{}'".format(txt))
             self.pythonCommands.append(utils.write(txt,pause))
 
         #Key Combo handler
         elif (opt == "Key Combo"):
-            txt = self.app.getTextArea("TypeArea").lower()
+            txt = self.app.getEntry("TypeArea").lower()
             lst = [item for item in txt.split() if item in utils.keys]
             self.commandList.append("Key Combo '{}'".format("+".join(lst)))
             self.pythonCommands.append(utils.hotkey(lst,pause))
 
         #Single Press handler
         elif (opt == "Single Press" and txt in utils.keys):
-            txt = self.app.getTextArea("TypeArea").lower()
+            txt = self.app.getEntry("TypeArea").lower()
             self.commandList.append("Single Press '{}'".format(txt))
             self.pythonCommands.append(utils.press(txt,pause))
 
-            
+
         #Invalid Handler
         else:
             print("Invalid Option")
@@ -119,7 +119,7 @@ class App(object):
         self.writeCommands()
 
     def getClickPositionButton(self,btn):
-        
+
         pause = self.app.getEntry("Delay(s)")
         if (btn == "Capture Click Position"):
             self.storedXpos = self.xpos
@@ -130,15 +130,15 @@ class App(object):
             self.commandList.append("Click on position X:{} Y:{}".format(x[2:],y[2:]))
             self.pythonCommands.append(utils.click(x[2:],y[2:],pause))
             self.writeCommands()
-            
+
     def getImageButton(self,btn):
-        
+
         pause = self.app.getEntry("Delay(s)")
-        
+
         if (btn == "Save Button"):
             imagePath = self.app.getEntry("Select image")
             self.commandList.append("Click on image {}".format(imagePath))
-            
+
             if imagePath != "":
                 self.pythonCommands.append(utils.imageClick(imagePath,pause))
 
