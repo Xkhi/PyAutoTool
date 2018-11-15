@@ -34,16 +34,16 @@ def write(str,pause=0.1):
 
 #FAULTY FUCNTION, NEEDS CHECKING
 def hotkey(keys,pause=0.1):
-    return "    pag.hotkey({},pause={})\n".format(",".join(keys),pause)
+    return "    pag.hotkey(\"{}\",pause={})\n".format("\",\"".join(keys),pause)
 
-def click(x,y):
-    return "    pag.click({},{},duration={})\n".format(x,y,0.01)
+def click(x,y,pause):
+    return "    pag.click({},{},duration=0.01,pause={})\n".format(x,y,pause)
 
-def imageClick(imagePath):
+def imageClick(imagePath,pause):
     
     commands = ""
     commands += "    buttonLocation = pag.locateCenterOnScreen(\"{}\")\n".format(imagePath)
-    commands += "    pag.click(buttonLocation,duration={})\n".format(0.01)
+    commands += "    pag.click(buttonLocation,duration=0.01,pause={})\n".format(pause)
     return commands
 
 def sleep(duration=0.1):

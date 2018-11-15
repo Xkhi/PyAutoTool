@@ -83,26 +83,28 @@ class App(object):
 
     def parseTextCommands(self,btn):
         opt = self.app.getOptionBox("Type Kind")
-        txt = self.app.getTextArea("TypeArea").lower()
+        
         pause = self.app.getEntry("Delay(s)")
-        duration = self.app.getEntry("Delay(s)")
         
         #Plain text handler
         if(opt == "Plain Text"):
+            txt = self.app.getTextArea("TypeArea")
             self.commandList.append("Plain write '{}'".format(txt))
             self.pythonCommands.append(utils.write(txt,pause))
-            self.pythonCommands.append(utils.sleep(duration))
+
         #Key Combo handler
         elif (opt == "Key Combo"):
+            txt = self.app.getTextArea("TypeArea").lower()
             lst = [item for item in txt.split() if item in utils.keys]
             self.commandList.append("Key Combo '{}'".format("+".join(lst)))
             self.pythonCommands.append(utils.hotkey(lst,pause))
-            self.pythonCommands.append(utils.sleep(duration))
+
         #Single Press handler
         elif (opt == "Single Press" and txt in utils.keys):
+            txt = self.app.getTextArea("TypeArea").lower()
             self.commandList.append("Single Press '{}'".format(txt))
             self.pythonCommands.append(utils.press(txt,pause))
-            self.pythonCommands.append(utils.sleep(duration))
+
             
         #Invalid Handler
         else:
@@ -112,7 +114,8 @@ class App(object):
         self.writeCommands()
 
     def getClickPositionButton(self,btn):
-        duration = self.app.getEntry("Delay(s)")
+        
+        pause = self.app.getEntry("Delay(s)")
         if (btn == "Capture Click Position"):
             self.storedXpos = self.xpos
             self.storedYpos = self.ypos
@@ -120,20 +123,20 @@ class App(object):
         elif (btn == "Save Click Position"):
             x,y = self.app.getLabel("Click Position").split(',')
             self.commandList.append("Click on position X:{} Y:{}".format(x[2:],y[2:]))
-            self.pythonCommands.append(utils.click(x[2:],y[2:]))
-            self.pythonCommands.append(utils.sleep(duration))
+            self.pythonCommands.append(utils.click(x[2:],y[2:],pause))
             self.writeCommands()
             
     def getImageButton(self,btn):
-        duration = self.app.getEntry("Delay(s)")
+        
+        pause = self.app.getEntry("Delay(s)")
         
         if (btn == "Save Button"):
             imagePath = self.app.getEntry("Select image")
             self.commandList.append("Click on image {}".format(imagePath))
             
             if imagePath != "":
-                self.pythonCommands.append(utils.imageClick(imagePath))
-                self.pythonCommands.append(utils.sleep(duration))
+                self.pythonCommands.append(utils.imageClick(imagePath,pause))
+
                 self.writeCommands()
 
     def clearLastCommandButton(self,btn):
@@ -142,8 +145,7 @@ class App(object):
             self.app.setTextArea("CommandList","Command List Empty!")
         else:
             self.commandList.pop()
-            self.pythonCommands.pop()#actual command
-            self.pythonCommands.pop()#sleep
+            self.pythonCommands.pop()
             self.writeCommands()
 
     def clearAllCommandsButton(self,btn):
@@ -175,7 +177,7 @@ class App(object):
             commandText = commandText + command + "\n"
 
         self.app.setTextArea("CommandList", commandText)
-        print(self.pythonCommands)
+        #print(self.pythonCommands)
 
 
 def main():
