@@ -21,9 +21,12 @@ keys = ['\t', '\n', '\r', ' ', '!', '"', '#', '$', '%', '&', "'", '(',
 'up', 'volumedown', 'volumemute', 'volumeup', 'win', 'winleft', 'winright', 'yen',
 'command', 'option', 'optionleft', 'optionright']
 
-about = "This tool was created by\nJavier Alvarez & Enrique Espinosa\nFor Continental Engineering Services"
+about = "This tool was created by:\n\n\
+Enrique Espinosa - enrique.espinosa@conti-engineering.com\n\n\
+Javier Alvarez - javier.3.alvarez@continental-corporation.com\n\n\
+For Continental Engineering Services"
 
-fileHeader = "import pyautogui as pag\nfrom time import sleep\n\ndef main():\n"
+fileHeader = "import pyautogui as pag\n\ndef main():\n"
 fileFooter = "\nif __name__ == '__main__':\n    main()"
 
 def press(btn,pause=0.1):
@@ -40,7 +43,7 @@ def click(x,y,pause):
     return "    pag.click({},{},duration=0.01,pause={})\n".format(x,y,pause)
 
 def imageClick(imagePath,pause):
-    
+
     commands = ""
     commands += "    buttonLocation = pag.locateCenterOnScreen(\"{}\")\n".format(imagePath)
     commands += "    pag.click(buttonLocation,duration=0.01,pause={})\n".format(pause)
