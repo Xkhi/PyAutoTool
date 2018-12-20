@@ -38,9 +38,11 @@ class App(object):
 
         self.app.startLabelFrame("Mouse Clicks", guiRow, 2,1,3,'ew')
         self.app.setPadding(20, 10)
-        self.app.addButton("Capture Click Position",self.getClickPositionButton)
+        
+        self.app.addButton("Capture Click Position",self.getClickPositionButton,0,0)
+        self.app.addButton("?",self.genericButton,0,1)
         self.app.addLabel("Click Position","")
-        self.app.addButton("Save Click Position",self.getClickPositionButton)
+        self.app.addButton("Save Click Position",self.getClickPositionButton,2,0,2)
         self.app.stopLabelFrame()
 
         ##Row5
@@ -96,7 +98,10 @@ class App(object):
                 self.app.infoBox("PyAutoScript Generated", "The script "+fileName+" was successfully generated", parent=None)
                 
                 
-                
+        elif btn == '?':
+            
+            self.app.infoBox("Capture a new cursor location","Select \"Capture Click Position\", place your cursor in the desired\n screen location and press SPACE BAR to capture the new location.", parent=None)
+              
         else:
 
             self.commandList.append("Button pressed {}, not yet implemented".format(btn))
