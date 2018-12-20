@@ -54,9 +54,13 @@ class App(object):
         self.app.addScrolledTextArea("CommandList",guiRow,0,5)
         ##Row7
         guiRow = 6
-        self.app.addLabelEntry("AutoScript File Name",guiRow,0,2)
+        self.app.addLabelEntry("AutoScript File Name",guiRow,0,1)
+        self.app.addLabel(".py",".py",guiRow,1,1)
+        self.app.setLabelAlign(".py","left")
         self.app.addButton("Save AutoScript File",self.genericButton,guiRow,2)
         self.app.stopLabelFrame()
+        
+        
         #Status bar configuration
         self.app.addStatusbar(fields=3)
         self.app.setStatusbar("Mouse",0)
@@ -74,12 +78,25 @@ class App(object):
             self.app.infoBox("About PyAuTo", utils.about)
         elif btn == 'Save AutoScript File':
             fileName = self.app.getEntry("AutoScript File Name")
-            if fileName != "":
+            
+            
+            if fileName == "":
+                
+                self.app.infoBox("Error: File Name Missing", "Type a name for the script before saving", parent=None)
+                
+            elif self.commandList == []:
+                
+                self.app.infoBox("Error: No command created", "Create a command to generate automated script", parent=None)
+                
+            else:
+                
+                fileName = fileName+".py"
                 with open(fileName,'w') as outfile:
                     outfile.write(utils.buildFile(self.pythonCommands))
                 self.app.infoBox("PyAutoScript Generated", "The script "+fileName+" was successfully generated", parent=None)
-            else:
-                self.app.infoBox("Error: File Name Missing", "Type a name for the script before saving", parent=None)
+                
+                
+                
         else:
 
             self.commandList.append("Button pressed {}, not yet implemented".format(btn))
