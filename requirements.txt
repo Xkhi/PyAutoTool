@@ -1,0 +1,6 @@
+PyAutoGUI
+PyMsgBox
+PyScreeze
+pytweening
+appJar
+Pillow
